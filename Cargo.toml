@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "backend",
+    "programs/chainlocker_registry",
+]
+resolver = "2"
+

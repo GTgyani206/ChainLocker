@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChainLocker Control Plane</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">ChainLocker</p>
+          <h1>Edge Credential Control Plane</h1>
+          <p class="hero-copy">
+            Manage document hashing, IPFS pinning, and Solana credential issuance from a single dashboard.
+          </p>
+        </div>
+        <form id="token-form" class="token-panel">
+          <label for="admin-token">Admin token</label>
+          <div class="inline-row">
+            <input id="admin-token" name="adminToken" type="password" placeholder="x-chainlocker-admin-token" />
+            <button type="submit">Save</button>
+          </div>
+          <p class="muted">Stored in session storage for authenticated upload and issue calls.</p>
+        </form>
+      </header>
+
+      <main class="grid">
+        <section class="card status-card">
+          <div class="card-head">
+            <h2>Node Status</h2>
+            <button id="refresh-status" type="button">Refresh</button>
+          </div>
+          <div id="status-grid" class="status-grid"></div>
+          <pre id="config-output" class="json-output"></pre>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <h2>Upload and Pin</h2>
+          </div>
+          <form id="upload-form" class="stack">
+            <input id="upload-file" name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.json,.txt" required />
+            <button type="submit">Hash and Pin to IPFS</button>
+          </form>
+          <pre id="upload-output" class="json-output"></pre>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <h2>Issue Credential</h2>
+          </div>
+          <form id="issue-form" class="stack">
+            <label>
+              SHA-256 hex
+              <input id="issue-hash" name="sha256Hex" type="text" placeholder="64 hex chars" required />
+            </label>
+            <label>
+              IPFS CID
+              <input id="issue-cid" name="ipfsCid" type="text" placeholder="bafy..." required />
+            </label>
+            <label>
+              Unix timestamp
+              <input id="issue-time" name="issuedAtUnix" type="number" placeholder="Optional" />
+            </label>
+            <label>
+              Note
+              <input id="issue-note" name="note" type="text" placeholder="Issuance note or operator context" />
+            </label>
+            <label class="checkbox-row">
+              <input id="issue-dry-run" name="dryRun" type="checkbox" />
+              Dry run only
+            </label>
+            <button type="submit">Issue On-Chain</button>
+          </form>
+          <pre id="issue-output" class="json-output"></pre>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <h2>Verify Document</h2>
+          </div>
+          <form id="verify-form" class="stack">
+            <input id="verify-file" name="file" type="file" required />
+            <button type="submit">Hash in Browser and Verify</button>
+          </form>
+          <pre id="verify-output" class="json-output"></pre>
+        </section>
+
+        <section class="card wide-card">
+          <div class="card-head">
+            <h2>Activity</h2>
+            <button id="refresh-activity" type="button">Reload</button>
+          </div>
+          <div id="activity-feed" class="activity-feed"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
+

@@ -1,0 +1,9 @@
+[programs.devnet]
+chainlocker_registry = "8HrkFXZUf2CTKT4CP85ecsDV8KNDscB4UHrLni438mVa"
+
+[provider]
+cluster = "Devnet"
+wallet = "./keys/issuer-keypair.json"
+
+[workspace]
+members = ["programs/chainlocker_registry"]

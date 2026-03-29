@@ -1,0 +1,165 @@
+/* Dashboard Page Styles */
+
+.dashboard-page {
+  padding-top: calc(64px + var(--space-2xl));
+  padding-bottom: var(--space-3xl);
+}
+
+.page-header {
+  margin-bottom: var(--space-2xl);
+}
+
+.page-header h1 {
+  margin-bottom: var(--space-sm);
+}
+
+.page-header p {
+  max-width: 500px;
+}
+
+/* Token Card */
+.token-card {
+  margin-bottom: var(--space-xl);
+}
+
+.token-form {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.token-icon {
+  font-size: 1.4rem;
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.token-input {
+  flex: 1;
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.card-header h3 {
+  font-size: 1.1rem;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+/* Status Grid */
+.status-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.status-row:last-child {
+  border-bottom: none;
+}
+
+.status-row span:first-child {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Activity */
+.activity-card {
+  margin-top: var(--space-xl);
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.activity-item {
+  padding: var(--space-md);
+  background: var(--bg-glass);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.activity-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.activity-meta time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.activity-action {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.activity-detail {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.activity-hash {
+  display: block;
+  margin-top: var(--space-sm);
+  font-size: 0.7rem;
+  color: var(--accent-primary);
+  word-break: break-all;
+  font-family: monospace;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Spin animation */
+.spin-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .token-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .token-icon {
+    display: none;
+  }
+}
