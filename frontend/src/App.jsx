@@ -1,5 +1,6 @@
 import { BrowserRouter, NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import { ToastProvider } from './components/Toast';
+import StudentDashboard from './pages/StudentDashboard';
 import UniversityPortal from './pages/UniversityPortal';
 import VerifyPortal from './pages/VerifyPortal';
 import './pages/PortalPages.css';
@@ -35,6 +36,14 @@ function AppShell() {
             >
               Verify Portal
             </NavLink>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `portal-nav-link ${isActive ? 'portal-nav-link-active' : ''}`
+              }
+            >
+              Student Dashboard
+            </NavLink>
           </nav>
         </div>
       </header>
@@ -43,6 +52,7 @@ function AppShell() {
         <Routes>
           <Route path="/" element={<UniversityPortal />} />
           <Route path="/verify" element={<VerifyPortal />} />
+          <Route path="/dashboard" element={<StudentDashboard />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

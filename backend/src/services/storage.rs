@@ -59,6 +59,24 @@ impl StorageService {
         )?))
     }
 
+    pub async fn list_records(&self) -> Result<Vec<StoredDocumentRecord>, AppError> {
+        let mut entries = fs::read_dir(&self.records_dir).await?;
+        let mut records = Vec::new();
+
+        while let Some(entry) = entries.next_entry().await? {
+            let path = entry.path();
+            if path.extension().and_then(|ext| ext.to_str()) != Some("json") {
+                continue;
+            }
+
+            let content = fs::read(&path).await?;
+            records.push(serde_json::from_slice::<StoredDocumentRecord>(&content)?);
+        }
+
+        records.sort_by(|left, right| right.stored_at.cmp(&left.stored_at));
+        Ok(records)
+    }
+
     pub async fn update_record_signature(
         &self,
         sha256_hex: &str,

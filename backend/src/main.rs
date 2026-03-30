@@ -12,7 +12,7 @@ use axum::{
     http::{header, HeaderValue, Method, StatusCode},
     middleware::{self, Next},
     response::Response,
-    routing::get,
+    routing::{get, post},
     Router,
 };
 use config::AppConfig;
@@ -76,17 +76,19 @@ fn build_router(state: AppState, static_dir: PathBuf) -> Router {
         .route("/health", get(routes::health::health))
         .route("/system/config", get(routes::system::config))
         .route("/system/activity", get(routes::system::activity))
+        .route("/documents", get(routes::documents::list_documents))
+        .route("/documents/upload", post(routes::documents::upload_document))
         .route(
-            "/documents/upload",
-            axum::routing::post(routes::documents::upload_document),
+            "/documents/:sha256Hex/download",
+            get(routes::documents::download_document),
         )
         .route(
             "/credentials/issue",
-            axum::routing::post(routes::credentials::issue_credential),
+            post(routes::credentials::issue_credential),
         )
         .route(
             "/credentials/verify",
-            axum::routing::post(routes::credentials::verify_credential),
+            post(routes::credentials::verify_credential),
         )
         .fallback(|| async { StatusCode::NOT_FOUND })
         .with_state(state);

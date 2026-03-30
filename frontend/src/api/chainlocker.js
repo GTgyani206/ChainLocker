@@ -80,6 +80,7 @@ export async function uploadEncryptedDocument({ file, studentName }, onProgress)
   formData.append('file', encryptedFile);
   formData.append('sha256Hex', sha256Hex);
   formData.append('originalFilename', file.name);
+  formData.append('studentName', studentName);
   formData.append('encryptionKeyId', encryptionKeyId);
 
   return client.post('/documents/upload', formData, {
@@ -104,6 +105,32 @@ export async function issueCredential({ sha256Hex, ipfsCid, issuedAtUnix, note, 
 // Verify credential (public)
 export async function verifyCredential(sha256Hex) {
   return client.post('/credentials/verify', { sha256Hex });
+}
+
+export async function listHolderDocuments(studentName) {
+  return client.get('/documents', {
+    params: {
+      studentName: studentName?.trim() || undefined,
+      limit: 50,
+    },
+  });
+}
+
+export async function downloadHolderDocument(sha256Hex) {
+  try {
+    const response = await axios.get(`${API_BASE}/api/v1/documents/${sha256Hex}/download`, {
+      responseType: 'blob',
+      timeout: 30000,
+    });
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.error?.message ||
+      error.response?.data?.message ||
+      error.message ||
+      'Unable to download the encrypted document';
+    throw new Error(message);
+  }
 }
 
 // Browser-side SHA-256 hashing

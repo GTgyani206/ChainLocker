@@ -6,10 +6,20 @@ Follow these steps in this order on demo day.
 
 From the project root:
 
+PowerShell:
+
 ```powershell
 $env:IPFS_PATH="$PWD\.ipfs"
-if (-not (Test-Path $env:IPFS_PATH)) { ipfs init }
-ipfs daemon
+if (-not (Test-Path $env:IPFS_PATH)) { .\.tools\kubo_v0.40.1_windows-amd64\kubo\ipfs.exe init }
+.\.tools\kubo_v0.40.1_windows-amd64\kubo\ipfs.exe daemon
+```
+
+Git Bash:
+
+```bash
+export IPFS_PATH="$PWD/.ipfs"
+if [ ! -d "$IPFS_PATH" ]; then ./.tools/kubo_v0.40.1_windows-amd64/kubo/ipfs.exe init; fi
+./.tools/kubo_v0.40.1_windows-amd64/kubo/ipfs.exe daemon
 ```
 
 Wait for `Daemon is ready`.

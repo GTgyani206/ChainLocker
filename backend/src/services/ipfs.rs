@@ -129,6 +129,33 @@ impl IpfsService {
         Ok(IpfsAddResult { cid: payload.hash })
     }
 
+    pub async fn cat_cid(&self, cid: &str) -> Result<Vec<u8>, AppError> {
+        let url = format!(
+            "{}/cat?arg={}",
+            self.config.api_url.trim_end_matches('/'),
+            cid
+        );
+        let response = self.client.post(url).send().await.map_err(|error| {
+            AppError::upstream_logged(
+                format!(
+                    "cannot reach IPFS API at {} (start Kubo/IPFS Desktop daemon)",
+                    self.config.api_url
+                ),
+                error,
+            )
+        })?;
+
+        if !response.status().is_success() {
+            return Err(AppError::upstream(format!(
+                "ipfs cat failed with {} (api: {})",
+                response.status(),
+                self.config.api_url
+            )));
+        }
+
+        Ok(response.bytes().await?.to_vec())
+    }
+
     async fn pin_cid_to_pinata(&self, path: &Path, cid: &str, original_filename: &str) {
         if let Some(jwt) = self.config.pinata_jwt.as_ref() {
             self.pin_file_to_pinata(jwt, path, cid, original_filename)

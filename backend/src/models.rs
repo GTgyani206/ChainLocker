@@ -100,6 +100,7 @@ pub struct SystemConfigResponse {
 #[serde(rename_all = "camelCase")]
 pub struct StoredDocumentRecord {
     pub document_id: String,
+    pub student_name: Option<String>,
     pub original_filename: String,
     pub sha256_hex: String,
     pub ipfs_cid: String,
@@ -107,6 +108,7 @@ pub struct StoredDocumentRecord {
     pub size_bytes: u64,
     pub stored_at: DateTime<Utc>,
     pub local_path: String,
+    pub encryption_key_id: Option<String>,
     pub last_signature: Option<String>,
     pub note: Option<String>,
 }
@@ -116,6 +118,21 @@ pub struct StoredDocumentRecord {
 pub struct PublicRecordSummary {
     pub ipfs_cid: String,
     pub stored_at: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HolderDocumentSummary {
+    pub document_id: String,
+    pub student_name: Option<String>,
+    pub original_filename: String,
+    pub sha256_hex: String,
+    pub ipfs_cid: String,
+    pub pda: String,
+    pub stored_at: DateTime<Utc>,
+    pub encryption_key_id: Option<String>,
+    pub transaction_signature: Option<String>,
+    pub explorer_url: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
